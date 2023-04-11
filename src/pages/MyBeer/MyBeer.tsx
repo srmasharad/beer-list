@@ -12,7 +12,6 @@ import InputField from '../../components/common/InputField';
 import NoDataMessage from '../../components/common/NoDataMessage';
 import TextAreaField from '../../components/common/TextAreaField';
 import MyBeerItem from '../../components/MyBeerItem';
-import { BeerSkeleton } from '../../components/skeleton';
 import { useBeerView } from '../../hooks/useBeerView';
 import { useColors } from '../../hooks/useColors';
 import { BeerFormValueProps } from '../../types/beer-form';
@@ -33,7 +32,6 @@ const MyBeer = () => {
   const { view, onViewChange } = useBeerView('list');
   const { isDark } = useColors();
 
-  const [isLoading, setIsLoading] = useState(true);
   const [isDeleting, setIsDeleting] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
   const [formModal, setFormModal] = useState(false);
@@ -46,7 +44,6 @@ const MyBeer = () => {
 
     if (cachedData !== null) {
       setMyBeerData(JSON.parse(cachedData));
-      setIsLoading(false);
     }
   }, []);
 
@@ -84,10 +81,7 @@ const MyBeer = () => {
         </Button>
       </ActionBar>
 
-      <Grid>
-        {isLoading && myBeerData.length < 1 && <BeerSkeleton view={view} />}
-        {myBeerData.length < 1 ? <NoDataMessage /> : <MyBeerItem data={myBeerData} view={view} handleRemoveBeer={handleDeleteModal} />}
-      </Grid>
+      <Grid>{myBeerData.length < 1 ? <NoDataMessage /> : <MyBeerItem data={myBeerData} view={view} handleRemoveBeer={handleDeleteModal} />}</Grid>
 
       <Formik
         initialValues={formData}
