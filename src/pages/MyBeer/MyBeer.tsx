@@ -85,7 +85,7 @@ const MyBeer = () => {
       </ActionBar>
 
       <Grid>
-        {isLoading && <BeerSkeleton view={view} />}
+        {isLoading && myBeerData.length < 1 && <BeerSkeleton view={view} />}
         {myBeerData.length < 1 ? <NoDataMessage /> : <MyBeerItem data={myBeerData} view={view} handleRemoveBeer={handleDeleteModal} />}
       </Grid>
 
