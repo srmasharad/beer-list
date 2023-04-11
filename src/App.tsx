@@ -1,0 +1,33 @@
+import { BrowserRouter } from 'react-router-dom';
+
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+
+import BaseProvider from './components/BaseProvider/BaseProvider';
+import BaseRouter from './router';
+
+function App() {
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        refetchOnWindowFocus: false,
+        refetchOnReconnect: false,
+        useErrorBoundary: true,
+        retry: false,
+      },
+    },
+  });
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      <BaseProvider>
+        <BrowserRouter>
+          <BaseRouter />
+        </BrowserRouter>
+      </BaseProvider>
+      <ReactQueryDevtools initialIsOpen={false} />
+    </QueryClientProvider>
+  );
+}
+
+export default App;
